@@ -1,0 +1,12 @@
+services:
+  domeneshop-ddns:
+    build: .
+    container_name: domeneshop-ddns-multi
+    restart: unless-stopped
+    environment:
+      - DOMENESHOP_CLIENT_TOKEN=your_client_token
+      - DOMENESHOP_CLIENT_SECRET=your_client_secret
+      - UPDATE_INTERVAL=300  # Update every 5 minutes
+    volumes:
+      - ./data/domains.txt:/app/domains.txt
+      - ./data/update-dns.sh:/app/update-dns.sh
