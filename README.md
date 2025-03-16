@@ -29,6 +29,8 @@ example.net test2
 ## Download
 ```curl
 curl -L https://github.com/P1NGS/domeneshop-ddns-docker/archive/refs/heads/main.tar.gz -o domeneshop-ddns-docker.tar.gz
+```
+```
 tar -xvzf domeneshop-ddns-docker.tar.gz
 ```
 or
@@ -38,6 +40,8 @@ git clone https://github.com/P1NGS/domeneshop-ddns-docker.git
 ## Configure Domains and API
 ```sh
 nano docker-compose.yml
+```
+```
 nano data/domains.txt
 ```
 ## Build docker image
