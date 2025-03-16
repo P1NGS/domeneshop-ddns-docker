@@ -31,28 +31,33 @@ else
         # Get domain ID from Domeneshop API
         DOMAIN_ID=$(curl -s -u "$TOKEN:$SECRET" "https://api.domeneshop.no/v0/domains" | jq -r --arg domain "$DOMAIN" '.[] | select(.domain==$domain) | .id')
 
-        if [ -n "$DOMAIN_ID" ]; then
+
+        if [ ! -n "$DOMAIN_ID" ]; then
+            echo "Error: Could not find domain ID for $DOMAIN"
+            continue 
+        else
             # Get current IP for the DNS record for this hostname
             CURRENT_IP=$(curl -s -u "$TOKEN:$SECRET" "https://api.domeneshop.no/v0/domains/$DOMAIN_ID/dns" | jq -r --arg host "$HOSTNAME" '.[] | select(.host==$host) | .data')
-
-            if [ "$CURRENT_IP" != "$PUBLIC_IP" ]; then
-                # Get the DNS record ID
-                RECORD_ID=$(curl -s -u "$TOKEN:$SECRET" "https://api.domeneshop.no/v0/domains/$DOMAIN_ID/dns" | jq -r --arg host "$HOSTNAME" '.[] | select(.host==$host) | .id')
-                if [ -n "$RECORD_ID" ]; then
-                    # Perform the update with the new public IP
-                    curl -X PUT "https://api.domeneshop.no/v0/domains/$DOMAIN_ID/dns/$RECORD_ID" \
-                        -u "$TOKEN:$SECRET" \
-                        -H "Content-Type: application/json" \
-                        -d "{\"type\": \"A\", \"host\": \"$HOSTNAME\", \"data\": \"$PUBLIC_IP\", \"ttl\": $TTL}"
-                    echo "Updated $HOSTNAME.$DOMAIN to $PUBLIC_IP"
-                else
-                    echo "Error: Could not find DNS record for $HOSTNAME.$DOMAIN"
-                fi
-            else
-                echo "No update needed for $HOSTNAME.$DOMAIN (IP is already $CURRENT_IP)"
-            fi
+        fi
+        
+        
+        if [ ! "$CURRENT_IP" != "$PUBLIC_IP" ]; then
+            echo "No update needed for $HOSTNAME.$DOMAIN (IP is already $CURRENT_IP)"
+            continue 
         else
-            echo "Error: Could not find domain ID for $DOMAIN"
+            # Get the DNS record ID
+            RECORD_ID=$(curl -s -u "$TOKEN:$SECRET" "https://api.domeneshop.no/v0/domains/$DOMAIN_ID/dns" | jq -r --arg host "$HOSTNAME" '.[] | select(.host==$host) | .id')
+        fi
+
+        if [ -n "$RECORD_ID" ]; then
+            # Perform the update with the new public IP
+            curl -X PUT "https://api.domeneshop.no/v0/domains/$DOMAIN_ID/dns/$RECORD_ID" \
+                -u "$TOKEN:$SECRET" \
+                -H "Content-Type: application/json" \
+                -d "{\"type\": \"A\", \"host\": \"$HOSTNAME\", \"data\": \"$PUBLIC_IP\", \"ttl\": $TTL}"
+            echo "Updated $HOSTNAME.$DOMAIN to $PUBLIC_IP"
+        else
+            echo "Error: Could not find DNS record for $HOSTNAME.$DOMAIN"
         fi
     done < "$DOMAINS_FILE"
 
