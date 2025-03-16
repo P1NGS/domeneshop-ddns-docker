@@ -7,7 +7,7 @@ This updates only A records, and uses curl -s ipconfig.me to get publick IP.
 # Requirements
 First you need to create a API token.
 Go to https://domene.shop/admin?view=api
-And you need to install dokcer and docker-compose
+\n And you need to install dokcer and docker-compose
 
 # Configure API token
 In the ./docker-compose.yml update the your_client_token and your_client_secret with the API key you got earlier.
