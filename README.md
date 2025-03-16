@@ -19,7 +19,6 @@ In the ./docker-compose.yml update the your_client_token and your_client_secret 
 ## Add your domains in /data/domains.txt
 In the /data/domains.txt add yours domains like this 
 (Domain) (@ for root) or (subdomain)
-Eksample can be
 ```
 example.com @
 example.com test
