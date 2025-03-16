@@ -1,26 +1,22 @@
 # domeneshop-ddns-docker
-Docker Compose build for ddns to domeneshop
-
-This updates only A records, and uses curl -s ipconfig.me to get publick IP.
-
-
+Docker Compose build for DDNS to Domeneshop.
 
 # Requirements
-First you need to create a API token.
+First, you need to create an API token.
 
 Go to https://domene.shop/admin?view=api
 
-And you need to install dokcer and docker-compose
+The docker and docker-compose packages are needed.
 
 # Configure API token
-In the ./docker-compose.yml update the your_client_token and your_client_secret with the API key you got earlier.
+In the ./docker-compose.yml, update the your_client_token and your_client_secret with the API key you received earlier.
 ```
     environment:
       - DOMENESHOP_CLIENT_TOKEN=**your_client_token**
       - DOMENESHOP_CLIENT_SECRET=**your_client_secret**
 ```
 
-## Add your domains in /data/domains.txt
+## Add Your Domains in /data/domains.txt
 In the /data/domains.txt add yours domains like this 
 (Domain) (@ for root) or (subdomain)
 ```
@@ -39,7 +35,7 @@ or
 ```git 
 git clone https://github.com/P1NGS/domeneshop-ddns-docker.git
 ```
-## Configure domains and API
+## Configure Domains and API
 ```sh
 nano docker-compose.yml
 nano data/domains.txt
