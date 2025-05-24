@@ -1,4 +1,6 @@
 #!/bin/sh
+#This file is part of [domeneshop-ddns-docker].
+#It is licensed under the GNU GPL v3. See the LICENSE file for details.
 
 # Load env vars
 TOKEN="${DOMENESHOP_CLIENT_TOKEN}"
