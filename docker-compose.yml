@@ -10,4 +10,3 @@ services:
       - DOMENESHOP_CLIENT_SECRET=your_client_secret
     volumes:
       - ./data/domains.txt:/app/domains.txt
-      - ./data/update-dns.sh:/app/update-dns.sh
