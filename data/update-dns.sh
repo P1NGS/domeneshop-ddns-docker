@@ -43,7 +43,7 @@ else
         fi
         
         
-        if [ ! "$CURRENT_IP" != "$PUBLIC_IP" ]; then
+        if [ "$CURRENT_IP" = "$PUBLIC_IP" ]; then
             echo "No update needed for $HOSTNAME.$DOMAIN (IP is already $CURRENT_IP)"
             continue 
         else
