@@ -12,4 +12,4 @@ COPY data/update-dns.sh /app/update-dns.sh
 RUN chmod +x /app/update-dns.sh
 
 # Default command to run the script
-CMD ["/app/update-dns.sh"]
+CMD ["/bin/sh", "/app/update-dns.sh"]
