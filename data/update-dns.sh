@@ -39,7 +39,7 @@ else
             continue 
         else
             # Get current IP for the DNS record for this hostname
-            CURRENT_IP=$(curl -s -u "$TOKEN:$SECRET" "https://api.domeneshop.no/v0/domains/$DOMAIN_ID/dns" | jq -r --arg host "$HOSTNAME" '.[] | select(.host==$host) | .data')
+            CURRENT_IP=$(curl -s -u "$TOKEN:$SECRET" "https://api.domeneshop.no/v0/domains/$DOMAIN_ID/dns" | jq -r --arg host "$HOSTNAME" '.[] | select(.host==$host and .type=="A") | .data')
         fi
         
         
@@ -48,7 +48,7 @@ else
             continue 
         else
             # Get the DNS record ID
-            RECORD_ID=$(curl -s -u "$TOKEN:$SECRET" "https://api.domeneshop.no/v0/domains/$DOMAIN_ID/dns" | jq -r --arg host "$HOSTNAME" '.[] | select(.host==$host) | .id')
+            RECORD_ID=$(curl -s -u "$TOKEN:$SECRET" "https://api.domeneshop.no/v0/domains/$DOMAIN_ID/dns" | jq -r --arg host "$HOSTNAME" '.[] | select(.host==$host and .type=="A") | .id')
         fi
 
         if [ -n "$RECORD_ID" ]; then
